@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question Table</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .question-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1;
+    }
+
+    .question-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 600px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <tr>
+      <td>Раунд 1</td>
+      <td class="question-cell" data-question="Вопрос 1">Вопрос 1</td>
+      <td class="question-cell" data-question="Вопрос 2">Вопрос 2</td>
+      <td class="question-cell" data-question="Вопрос 3">Вопрос 3</td>
+      <td class="question-cell" data-question="Вопрос 4">Вопрос 4</td>
+      <td class="question-cell" data-question="Вопрос 5">Вопрос 5</td>
+    </tr>
+    <tr>
+      <td>Раунд 2</td>
+      <td class="question-cell" data-question="Вопрос 1">Вопрос 1</td>
+      <td class="question-cell" data-question="Вопрос 2">Вопрос 2</td>
+      <td class="question-cell" data-question="Вопрос 3">Вопрос 3</td>
+      <td class="question-cell" data-question="Вопрос 4">Вопрос 4</td>
+      <td class="question-cell" data-question="Вопрос 5">Вопрос 5</td>
+    </tr>
+    <!-- Добавьте другие строки с именами людей и их вопросами здесь -->
+  </table>
+
+  <div class="question-overlay" id="questionOverlay">
+    <div class="question-box">
+      <span class="close" onclick="closeQuestion()">×</span>
+      <h2 id="questionTitle"></h2>
+      <p id="questionContent"></p>
+    </div>
+  </div>
+
+  <script>
+    const questionCells = document.querySelectorAll('.question-cell');
+    const questionOverlay = document.getElementById('questionOverlay');
+    const questionTitle = document.getElementById('questionTitle');
+    const questionContent = document.getElementById('questionContent');
+
+    // Function to show the question overlay
+    function showQuestion(question) {
+      questionTitle.textContent = question.getAttribute('data-question');
+      questionContent.textContent = 'Question content for ' + question.getAttribute('data-question');
+
+      questionOverlay.style.display = 'flex';
+    }
+
+    // Function to close the question overlay
+    function closeQuestion() {
+      questionOverlay.style.display = 'none';
+    }
+
+    // Add click event listeners to question cells
+    questionCells.forEach(questionCell => {
+      questionCell.addEventListener('click', () => {
+        if (!questionCell.classList.contains('answered')) {
+          showQuestion(questionCell);
+          questionCell.classList.add('answered');
+          questionCell.textContent = '';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

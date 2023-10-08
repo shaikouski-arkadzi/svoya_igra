@@ -114,6 +114,7 @@
     }
     // Function to close the question overlay
     function closeQuestion() {
+       currentImageIndex++; // Move to the next image when closing
       questionOverlay.style.display = 'none';
     }
     // Add click event listeners to question cells

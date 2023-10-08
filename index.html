@@ -83,13 +83,7 @@
     </div>
   </div>
 
-   <script>
-    const questionCells = document.querySelectorAll('.question-cell');
-    const questionOverlay = document.getElementById('questionOverlay');
-    const questionTitle = document.getElementById('questionTitle');
-    const questionContent = document.getElementById('questionContent');
-
-    // Define image URLs in a specific order
+  <script>
     const imageUrls = [
       '1.png',
       '2.png',
@@ -101,34 +95,32 @@
       '8.png',
     ];
 
-    let currentImageIndex = 0; // Track the current image index
-
-    // Function to show the question overlay with an image
-    function showImage() {
-      // Check if we have reached the end of the images
-      if (currentImageIndex >= imageUrls.length) {
+       let currentImageIndex = 0; // Track the current image index
+    
+    const questionCells = document.querySelectorAll('.question-cell');
+    const questionOverlay = document.getElementById('questionOverlay');
+    const questionTitle = document.getElementById('questionTitle');
+    const questionContent = document.getElementById('questionContent');
+    // Function to show the question overlay
+     function showQuestion(question) {
+       if (currentImageIndex >= imageUrls.length) {
         questionOverlay.style.display = 'none'; // Close overlay if all images are shown
         return;
       }
-
-      questionTitle.textContent = 'Image ' + (currentImageIndex + 1);
-      questionContent.innerHTML = <img src="${imageUrls[currentImageIndex]}" alt="Image ${currentImageIndex + 1}">;
-
+      questionTitle.textContent = question.getAttribute('data-question');
+      questionContent.textContent = 'Question content for ' + question.getAttribute('data-question');
+      questionContent.innerHTML = `<img src="${imageUrls[currentImageIndex]}" alt="Image ${currentImageIndex + 1}">`;
       questionOverlay.style.display = 'flex';
     }
-
     // Function to close the question overlay
     function closeQuestion() {
       questionOverlay.style.display = 'none';
-      currentImageIndex++; // Move to the next image when closing
-      showImage(); // Show the next image
     }
-
     // Add click event listeners to question cells
     questionCells.forEach(questionCell => {
       questionCell.addEventListener('click', () => {
         if (!questionCell.classList.contains('answered')) {
-          showImage();
+          showQuestion(questionCell);
           questionCell.classList.add('answered');
           questionCell.textContent = '';
         }
